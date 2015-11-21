@@ -90,7 +90,14 @@ Instead, best practice use of the `{% minify %}` tags is to wrap them in `{% cac
 
 As with `{% cache %}` tags, you can’t use `{% minify %}` tags outside of top-level `{% block %}` tags within a template that extends another.  [Read more about cache tags](http://buildwithcraft.com/docs/templating/cache)
 
+A nice side-benefit of minifying HTML inside of `{% cache %}` tags is that the text that is stored in the database as a cache is minified itself.
+
 ## Changelog
+
+### 1.0.1 -- 2015.11.21
+
+* Fixed an issue with the minify submodule not being included in the git repo
+* Updated the README.md
 
 ### 1.0.0 -- 2015.11.21
 
