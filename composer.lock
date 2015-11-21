@@ -101,12 +101,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mrclay/minify.git",
-                "reference": "273a08f2ee556180eb0c0ef3d29105a2446eb062"
+                "reference": "e2bb6b056585745d685e3271d48920233afe50cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mrclay/minify/zipball/273a08f2ee556180eb0c0ef3d29105a2446eb062",
-                "reference": "273a08f2ee556180eb0c0ef3d29105a2446eb062",
+                "url": "https://api.github.com/repos/mrclay/minify/zipball/e2bb6b056585745d685e3271d48920233afe50cf",
+                "reference": "e2bb6b056585745d685e3271d48920233afe50cf",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,7 @@
             ],
             "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
             "homepage": "https://github.com/mrclay/minify",
-            "time": "2015-11-20 11:52:48"
+            "time": "2015-11-21 21:22:42"
         },
         {
             "name": "tubalmartin/cssmin",

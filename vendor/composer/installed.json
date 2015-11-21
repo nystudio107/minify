@@ -144,12 +144,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/mrclay/minify.git",
-            "reference": "273a08f2ee556180eb0c0ef3d29105a2446eb062"
+            "reference": "e2bb6b056585745d685e3271d48920233afe50cf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mrclay/minify/zipball/273a08f2ee556180eb0c0ef3d29105a2446eb062",
-            "reference": "273a08f2ee556180eb0c0ef3d29105a2446eb062",
+            "url": "https://api.github.com/repos/mrclay/minify/zipball/e2bb6b056585745d685e3271d48920233afe50cf",
+            "reference": "e2bb6b056585745d685e3271d48920233afe50cf",
             "shasum": ""
         },
         "require": {
@@ -167,7 +167,7 @@
             "leafo/lessphp": "LESS support",
             "meenie/javascript-packer": "Keep track of the Packer PHP port using Composer"
         },
-        "time": "2015-11-20 11:52:48",
+        "time": "2015-11-21 21:22:42",
         "type": "library",
         "installation-source": "source",
         "autoload": {
