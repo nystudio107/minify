@@ -28,7 +28,7 @@ Firstly, you want to keep HTML/CSS/JS comments and a nice hierarchical structure
 
 Secondly, not all CSS/JS can or should be in static asset files.  Sometimes you need inline Javascript for efficiency reasons, or if you're using `JSON-LD` for Google Structured Data/SEO purposes inline in your HTML files.  You may also want to be able to use the Craft templating engine in your CSS/JS itself.
 
-Finally, if you minify any code you wrap in `{% cache %}` tags, that means it will be stored minified in the database, reducicing db size and (marginally) transaction overhead.
+Finally, if you minify any code you wrap in `{% cache %}` tags, that means it will be stored minified in the database, reducing db size and (marginally) transactional overhead.
 
 ### Minifying HTML
 
