@@ -92,7 +92,20 @@ As with `{% cache %}` tags, you can’t use `{% minify %}` tags outside of top-l
 
 A nice side-benefit of minifying HTML inside of `{% cache %}` tags is that the text that is stored in the database as a cache is minified itself.
 
+##Minify environmentVariables
+
+Minify offers two `environmentVariables` (set in your `config/general.php`) to allow you to control its behavior:
+
+**disableTemplateMinifying** if set to `true` then Minify will not minify anything
+
+**disableDevmodeMinifying** if set to `true` then Minify will not minify anything if `devMode` is enabled
+
+
 ## Changelog
+
+### 1.0.2 -- 2015.11.21
+
+* Added `environmentVariables` to let you control Minify's behavior
 
 ### 1.0.1 -- 2015.11.21
 

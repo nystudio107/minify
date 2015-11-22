@@ -5,14 +5,34 @@ namespace Craft;
 class MinifyService extends BaseApplicationComponent
 {
 
+    protected $shouldMinify = true;
+
+    public function init()
+    {
+	    $envVars = craft()->config->get('environmentVariables');
+	    	
+        if (isset($envVars['disableTemplateMinifying']) && $envVars['disableTemplateMinifying'])
+        {
+	        $this->shouldMinify = false;
+        }
+
+        if (craft()->config->get('devMode') && isset($envVars['disableDevmodeMinifying']) && $envVars['disableDevmodeMinifying'])
+        {
+	        $this->shouldMinify = false;
+        }
+    }
+
 /* --------------------------------------------------------------------------------
 	Minify the passed in HTML
 -------------------------------------------------------------------------------- */
 
     public function htmlMin($htmlText="")
     {
-        $minified_html = \Minify_HTML::minify($htmlText);
-        return $minified_html;
+	    if ($this->shouldMinify)
+	    {
+        	$htmlText = \Minify_HTML::minify($htmlText);
+        }
+        return $htmlText;
     } /* -- htmlMin */
 
 /* --------------------------------------------------------------------------------
@@ -21,8 +41,11 @@ class MinifyService extends BaseApplicationComponent
 
     public function cssMin($cssText="")
     {
-        $minified_css = \Minify_CSSmin::minify($cssText);
-        return $minified_css;
+	    if ($this->shouldMinify)
+	    {
+        	$cssText = \Minify_CSSmin::minify($cssText);
+        }
+        return $cssText;
     } /* -- cssMin */
 
 /* --------------------------------------------------------------------------------
@@ -31,8 +54,11 @@ class MinifyService extends BaseApplicationComponent
 
     public function jsMin($jsText="")
     {
-        $minified_js = \JSMin\JSMin::minify($jsText);
-        return $minified_js;
+	    if ($this->shouldMinify)
+	    {
+	        $jsText = \JSMin\JSMin::minify($jsText);
+	    }
+        return $jsText;
     } /* -- jsMin */
 
 } /* -- MinifyService */
