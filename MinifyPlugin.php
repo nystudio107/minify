@@ -17,7 +17,7 @@ class MinifyPlugin extends BasePlugin
 
 	public function getName()
 	{
-	    return 'Minify';
+	    return Craft::t('Minify');
 	}
 
     public function getDescription()
