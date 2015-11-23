@@ -1,0 +1,36 @@
+[
+    {
+        "version": "1.0.3",
+        "downloadUrl": "https://github.com/khalwat/minify/archive/master.zip",
+        "date": "2015-11-23T11:00:00-05:00",
+        "notes": [
+            "[Added] Added support for Craft 2.5 new plugin features",
+            "[Improved] Updated the README.md",
+        ]
+    },
+    {
+        "version": "1.0.2",
+        "downloadUrl": "https://github.com/khalwat/minify/archive/master.zip",
+        "date": "2015-11-22T12:00:00-05:00",
+        "notes": [
+            "[Added] Added `environmentVariables` to let you control Minify's behavior"
+        ]
+    },
+    {
+        "version": "1.0.1",
+        "downloadUrl": "https://github.com/khalwat/minify/archive/master.zip",
+        "date": "2015-11-22T11:00:00-05:00",
+        "notes": [
+            "[Fixed] Fixed an issue with the minify submodule not being included in the git repo",
+            "[Improved] Updated the README.md",
+        ]
+    },
+    {
+        "version": "1.0.0",
+        "downloadUrl": "https://github.com/khalwat/minify/archive/master.zip",
+        "date": "2015-11-21T11:00:00-05:00",
+        "notes": [
+            "[Added] Initial release"
+        ]
+    }
+]

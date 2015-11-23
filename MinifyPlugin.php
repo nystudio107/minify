@@ -20,10 +20,30 @@ class MinifyPlugin extends BasePlugin
 	    return 'Minify';
 	}
 
+    public function getDescription()
+    {
+        return 'A simple plugin that allows you to minify blocks of HTML, CSS, and JS inline in Craft CMS templates.';
+    }
+    
+    public function getDocumentationUrl()
+    {
+        return 'https://github.com/khalwat/minify/blob/master/README.md';
+    }
+    
+    public function getReleaseFeedUrl()
+    {
+        return 'https://github.com/khalwat/minify/blob/master/releases.json';
+    }
+    
 	public function getVersion()
 	{
-	    return '1.0.2';
+	    return '1.0.3';
 	}
+
+    public function getSchemaVersion()
+    {
+        return '1.0.0';
+    }
 
 	public function getDeveloper()
 	{

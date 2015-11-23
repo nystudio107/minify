@@ -70,17 +70,25 @@ You can wrap any arbitrary `<script>` JS code in the following block tags to min
 
 ...and the resulting JS output will be stripped of comments, empty space, etc.
     
-##Just because you can doesn't mean you should
+##Minify all the things
 
-Yes, you can simply wrap your entire `_layout.twig` template in:
+If you want to minify your entire HTML on the frontend, you can simply wrap your entire `_layout.twig` template (the one that other templates `extends`) in:
 
 	{% minify %}
-			(Massive HTML/Twig template here)
+			(Entire base HTML/Twig template here)
     {% endminify %}
 
-...but understand that you probably shouldn't.  The reason is that minification is not cheap; and if you do it this way, every single HTTP request will spend extra cycles minimizing your entire template.
+Then also wrap any inline `<style>` and `<script>` tags in `{% minify css %}` and `{% minify js %}` tags respectively (nested `{% minify %}` tags are fine).
 
-Instead, best practice use of the `{% minify %}` tags is to wrap them in `{% cache %}` tags:
+However, understand the potential performance implications.  On large HTML/CSS/JS blocks minification is not cheap, and if you do it this way, every single HTTP request will spend extra cycles minimizing your entire template.
+
+It works fine for HTML/CSS/JS templates that aren't too huge, but measure any performance impact by profiling your website before and after wrapping the entire `_layout.twig` template to ensure you're not introducing additional latency in the http requests.
+
+On most sites, the overhead that spinning up PHP and Craft takes is the majority of the TTFB (Time To First Byte), and this is not adversely affected by minifying the entire HTML as described here.
+
+##Cache as cache can
+
+A great way to use the `{% minify %}` tags is to wrap them in `{% cache %}` tags:
 
 	{% cache %}
 		{% minify html %}
@@ -91,6 +99,8 @@ Instead, best practice use of the `{% minify %}` tags is to wrap them in `{% cac
 As with `{% cache %}` tags, you can’t use `{% minify %}` tags outside of top-level `{% block %}` tags within a template that extends another.  [Read more about cache tags](http://buildwithcraft.com/docs/templating/cache)
 
 A nice side-benefit of minifying HTML inside of `{% cache %}` tags is that the text that is stored in the database as a cache is minified itself.
+
+If you've already implemented a caching system to reduce server response time, adding `{% minify %}` tags to the mix is a natural.
 
 ##Minify environmentVariables
 
@@ -103,11 +113,16 @@ Minify offers two `environmentVariables` (set in your `config/general.php`) to a
 
 ## Changelog
 
-### 1.0.2 -- 2015.11.21
+### 1.0.3 -- 2015.11.23
+
+* Added support for Craft 2.5 new plugin features
+* Updated the README.md
+
+### 1.0.2 -- 2015.11.22
 
 * Added `environmentVariables` to let you control Minify's behavior
 
-### 1.0.1 -- 2015.11.21
+### 1.0.1 -- 2015.11.22
 
 * Fixed an issue with the minify submodule not being included in the git repo
 * Updated the README.md
