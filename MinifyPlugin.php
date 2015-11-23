@@ -7,18 +7,18 @@ namespace Craft;
 class MinifyPlugin extends BasePlugin
 {
 
-	// Public Methods
-	// =========================================================================
+    // Public Methods
+    // =========================================================================
 
     public function init()
     {
         require_once __DIR__ . '/vendor/autoload.php';
     }
 
-	public function getName()
-	{
-	    return Craft::t('Minify');
-	}
+    public function getName()
+    {
+        return Craft::t('Minify');
+    }
 
     public function getDescription()
     {
@@ -35,30 +35,30 @@ class MinifyPlugin extends BasePlugin
         return 'https://github.com/khalwat/minify/blob/master/releases.json';
     }
     
-	public function getVersion()
-	{
-	    return '1.0.3';
-	}
+    public function getVersion()
+    {
+        return '1.0.3';
+    }
 
     public function getSchemaVersion()
     {
         return '1.0.0';
     }
 
-	public function getDeveloper()
-	{
-	    return 'Megalomaniac';
-	}
+    public function getDeveloper()
+    {
+        return 'Megalomaniac';
+    }
 
-	public function getDeveloperUrl()
-	{
-	    return 'http://www.megalomaniac.com';
-	}
+    public function getDeveloperUrl()
+    {
+        return 'http://www.megalomaniac.com';
+    }
 
-	public function addTwigExtension()
-	{
-		Craft::import('plugins.minify.twigextensions.*');
+    public function addTwigExtension()
+    {
+        Craft::import('plugins.minify.twigextensions.*');
 
-		return new MinifyTwigExtension();
-	}
+        return new MinifyTwigExtension();
+    }
 }
