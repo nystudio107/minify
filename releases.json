@@ -5,7 +5,7 @@
         "date": "2015-11-23T11:00:00-05:00",
         "notes": [
             "[Added] Added support for Craft 2.5 new plugin features",
-            "[Improved] Updated the README.md",
+            "[Improved] Updated the README.md"
         ]
     },
     {
@@ -22,7 +22,7 @@
         "date": "2015-11-22T11:00:00-05:00",
         "notes": [
             "[Fixed] Fixed an issue with the minify submodule not being included in the git repo",
-            "[Improved] Updated the README.md",
+            "[Improved] Updated the README.md"
         ]
     },
     {
