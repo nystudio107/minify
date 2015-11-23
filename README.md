@@ -20,9 +20,9 @@ You can nest any number of the various `{% minify %}` tags as you wish.
 
 ##Why minify inline HTML/CSS/JS code?
 
-You already properly `gzip` output via `mod_deflate` with Apache or by enabling compression with `Nginx` for optimal delivery on production.  You already use a task runner like `grunt` or `gulp` or CodeKit to minimize static resources like CSS/JS files.  What's the point of minifying HTML/CSS/JS inline?
+Twig provides the `{% spaceless %}` tag, but it is not intended for use as a way to properly minify HTML/CSS/JS code.
 
-Twig does provide the `{% spaceless %}` tag, but it is not intended for use as a way to properly minify HTML/CSS/JS code.
+You already properly `gzip` output via `mod_deflate` with Apache or by enabling compression with `Nginx` for optimal delivery on production.  You already use a task runner like `grunt` or `gulp` or CodeKit to minimize static resources like CSS/JS files.  What's the point of minifying HTML/CSS/JS inline?
 
 Firstly, you want to keep HTML/CSS/JS comments and a nice hierarchical structure to your code, with plenty of readable whitespace for development, but want all of this stripped out of the HTML/CSS/JS that is served to your frontend.
 
