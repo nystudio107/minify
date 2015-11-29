@@ -8,17 +8,17 @@ A simple plugin that allows you to minify blocks of HTML, CSS, and JS inline in 
 2.  -OR- do a `git clone https://github.com/khalwat/minify.git` directly into your `craft/plugins` folder.  You can then update it with `git pull`
 3. Install plugin in the Craft Control Panel under Settings > Plugins
 
-##Configuring Minify
+## Configuring Minify
 
 There is nothing to configure
 
-##Using the Minify plugin in your templates
+## Using the Minify plugin in your templates
 
 Minify adds several block tags for minifying HTML, CSS, and JS inline in your templates.  Minify does **not** minify external CSS or JS files.  Use `grunt` or `gulp` task runners to set up a workflow that minimizes these as part of your build process.
 
 You can nest any number of the various `{% minify %}` tags as you wish.
 
-##Why minify inline HTML/CSS/JS code?
+## Why minify inline HTML/CSS/JS code?
 
 Twig provides the `{% spaceless %}` tag, but it is not intended for use as a way to properly minify HTML/CSS/JS code.
 
@@ -70,7 +70,7 @@ You can wrap any arbitrary `<script>` JS code in the following block tags to min
 
 ...and the resulting JS output will be stripped of comments, empty space, etc.
     
-##Minify all the things
+## Minify all the things
 
 If you want to minify your entire HTML on the frontend, you can simply wrap your entire `_layout.twig` template (the one that other templates `extends`) in:
 
@@ -86,7 +86,7 @@ It works fine for HTML/CSS/JS templates that aren't too huge, but measure any pe
 
 On most sites, the overhead that spinning up PHP and Craft takes is the majority of the TTFB (Time To First Byte), and this is not adversely affected by minifying the entire HTML as described here.
 
-##Cache as cache can
+## Cache as cache can
 
 A great way to use the `{% minify %}` tags is to wrap them in `{% cache %}` tags:
 
@@ -102,13 +102,13 @@ A nice side-benefit of minifying HTML inside of `{% cache %}` tags is that the t
 
 If you've already implemented a caching system to reduce server response time, adding `{% minify %}` tags to the mix is a natural.
 
-##Minify environmentVariables
+## Minify environmentVariables
 
 Minify offers two `environmentVariables` (set in your `config/general.php`) to allow you to control its behavior:
 
-**disableTemplateMinifying** if set to `true` then Minify will not minify anything
+`disableTemplateMinifying` if set to `true` then Minify will not minify anything
 
-**disableDevmodeMinifying** if set to `true` then Minify will not minify anything if `devMode` is enabled
+`disableDevmodeMinifying` if set to `true` then Minify will not minify anything if `devMode` is enabled
 
 
 ## Changelog

@@ -47,12 +47,12 @@ class MinifyPlugin extends BasePlugin
 
     public function getDeveloper()
     {
-        return 'Megalomaniac';
+        return 'nystudio107';
     }
 
     public function getDeveloperUrl()
     {
-        return 'http://www.megalomaniac.com';
+        return 'http://nystudio107.com';
     }
 
     public function addTwigExtension()
