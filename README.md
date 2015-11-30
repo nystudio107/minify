@@ -72,7 +72,7 @@ You can wrap any arbitrary `<script>` JS code in the following block tags to min
     
 ## Minify all the things
 
-If you want to minify your entire HTML on the frontend, you can simply wrap your entire `_layout.twig` template (the one that other templates `extends`) in:
+If you want to minify your entire HTML on the frontend, you can simply wrap your entire `_layout.twig` template (the one that other templates `extends`):
 
 	{% minify %}
 			(Entire base HTML/Twig template here)
