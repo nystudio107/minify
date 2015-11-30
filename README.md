@@ -4,7 +4,7 @@ A simple plugin that allows you to minify blocks of HTML, CSS, and JS inline in 
 
 **Installation**
 
-1. Unzip file and place `minify` directory into your `craft/plugins` directory
+1. Download & unzip the file and place the `minify` directory into your `craft/plugins` directory
 2.  -OR- do a `git clone https://github.com/khalwat/minify.git` directly into your `craft/plugins` folder.  You can then update it with `git pull`
 3. Install plugin in the Craft Control Panel under Settings > Plugins
 
