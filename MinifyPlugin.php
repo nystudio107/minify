@@ -32,12 +32,12 @@ class MinifyPlugin extends BasePlugin
     
     public function getReleaseFeedUrl()
     {
-        return 'https://github.com/khalwat/minify/blob/master/releases.json';
+        return 'https://raw.githubusercontent.com/khalwat/minify/master/releases.json';
     }
     
     public function getVersion()
     {
-        return '1.0.3';
+        return '1.0.4';
     }
 
     public function getSchemaVersion()

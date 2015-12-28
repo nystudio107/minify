@@ -9,14 +9,15 @@ class MinifyService extends BaseApplicationComponent
 
     public function init()
     {
-	    $envVars = craft()->config->get('environmentVariables');
-	    	
-        if (isset($envVars['disableTemplateMinifying']) && $envVars['disableTemplateMinifying'])
+	    $disableTemplateMinifying = craft()->config->get('disableTemplateMinifying');
+	    $disableDevmodeMinifying = craft()->config->get('disableDevmodeMinifying');
+	    
+        if ($disableTemplateMinifying)
         {
 	        $this->shouldMinify = false;
         }
 
-        if (craft()->config->get('devMode') && isset($envVars['disableDevmodeMinifying']) && $envVars['disableDevmodeMinifying'])
+        if (craft()->config->get('devMode') && $disableDevmodeMinifying)
         {
 	        $this->shouldMinify = false;
         }

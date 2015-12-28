@@ -103,9 +103,9 @@ A nice side-benefit of minifying HTML inside of `{% cache %}` tags is that the t
 
 If you've already implemented a caching system to reduce server response time, adding `{% minify %}` tags to the mix is a natural.
 
-## Minify environmentVariables
+## Minify craft.config settings
 
-Minify offers two `environmentVariables` (set in your `config/general.php`) to allow you to control its behavior:
+Minify offers two `craft.config` (set in your `config/general.php`) to allow you to control its behavior:
 
 `disableTemplateMinifying` if set to `true` then Minify will not minify anything
 
@@ -113,6 +113,12 @@ Minify offers two `environmentVariables` (set in your `config/general.php`) to a
 
 
 ## Changelog
+
+### 1.0.4 -- 2015.12.28
+
+* Fixed the `releases.json` feed URL
+* Changed the Minify config settings from `environmentalVariables` to `craft.config` settings
+* Updated the README.md
 
 ### 1.0.3 -- 2015.11.23
 
