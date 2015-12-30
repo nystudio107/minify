@@ -111,6 +111,18 @@ Minify offers two `craft.config` (set in your `config/general.php`) to allow you
 
 `disableDevmodeMinifying` if set to `true` then Minify will not minify anything if `devMode` is enabled
 
+## Why does my minified HTML/CSS still have linebreaks?
+
+Minify uses the [Minify PHP library](https://github.com/mrclay/minify).  Here's their official explanation:
+
+####Why do the CSS & HTML minifiers add so many line breaks?
+TL;DR: Ignore them. They don't add to the output size and if you absolutely want all content on one line you will have to use another tool.
+
+It's rumored that some source control tools and old browsers don't like very long lines. Compressed files with shorter lines are also easier to diff.
+
+Since both Minify classes are regex-based, it would be very difficult/error-prone to count characters then try to re-establish context to add line breaks. Instead, both classes trade 1 space for 1 line break (\n) wherever possible, adding breaks but without adding bytes.
+
+If you can think of another safe & efficient way to limit lines in these two tools without adding bytes, please submit a patch, but this is not something anyone should be worrying about.
 
 ## Changelog
 
