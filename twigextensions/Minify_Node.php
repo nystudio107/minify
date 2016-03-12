@@ -6,46 +6,52 @@ namespace Craft;
  */
 class Minify_Node extends \Twig_Node
 {
-	// Properties
-	// =========================================================================
+    // Properties
+    // =========================================================================
 
 
-	// Public Methods
-	// =========================================================================
+    // Public Methods
+    // =========================================================================
 
-	/**
-	 * @param \Twig_Compiler $compiler
-	 *
-	 * @return null
-	 */
-	public function compile(\Twig_Compiler $compiler)
-	{
-		$html = $this->getAttribute('html');
-		$css = $this->getAttribute('css');
-		$js = $this->getAttribute('js');
+    /**
+     * @param \Twig_Compiler $compiler
+     *
+     * @return null
+     */
+    public function compile(\Twig_Compiler $compiler)
+    {
+        $html = $this->getAttribute('html');
+        $css = $this->getAttribute('css');
+        $js = $this->getAttribute('js');
 
         $compiler
             ->addDebugInfo($this);
 
-		$compiler
+        $compiler
             ->write("ob_start();\n")
             ->subcompile($this->getNode('body'))
             ->write("\$_compiledBody = ob_get_clean();\n");
 
-        if ($html) {
-    		$compiler
-    			->write("echo \Craft\craft()->minify->htmlMin(\$_compiledBody);\n");
+        if ($html)
+        {
+            $compiler
+                ->write("echo \Craft\craft()->minify->htmlMin(\$_compiledBody);\n");
+        }
+        elseif ($css)
+        {
+            $compiler
+                ->write("echo \Craft\craft()->minify->cssMin(\$_compiledBody);\n");
+        }
+        elseif ($js)
+        {
+            $compiler
+                ->write("echo \Craft\craft()->minify->jsMin(\$_compiledBody);\n");
+        }
+        else
+        {
+            $compiler
+                ->write("echo \Craft\craft()->minify->minify(\$_compiledBody);\n");
         }
 
-        if ($css) {
-    		$compiler
-    			->write("echo \Craft\craft()->minify->cssMin(\$_compiledBody);\n");
-        }
-
-        if ($js) {
-    		$compiler
-    			->write("echo \Craft\craft()->minify->jsMin(\$_compiledBody);\n");
-        }
-
-	}
+    }
 }

@@ -6,8 +6,9 @@ A simple plugin that allows you to minify blocks of HTML, CSS, and JS inline in 
 
 1. Download & unzip the file and place the `minify` directory into your `craft/plugins` directory
 2.  -OR- do a `git clone https://github.com/khalwat/minify.git` directly into your `craft/plugins` folder.  You can then update it with `git pull`
-3. Install plugin in the Craft Control Panel under Settings > Plugins
-4. The plugin folder should be named `minify` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
+3.  -OR- install with Composer via `composer require nystudio107/minify`
+4. Install plugin in the Craft Control Panel under Settings > Plugins
+5. The plugin folder should be named `minify` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
 
 ## Configuring Minify
 
@@ -31,6 +32,19 @@ Secondly, not all CSS/JS can or should be in static asset files.  Sometimes you 
 
 Finally, if you minify any code you wrap in `{% cache %}` tags, that means it will be stored minified in the database, reducing db size and (marginally) transactional overhead.
 
+### Minifying Everything
+
+You can wrap any arbitrary HTML/Twig code in the following block tags to minify it:
+
+	{% minify %}
+		(HTML/Twig code here)
+    {% endminify %}
+
+...and the resulting HTML output will be stripped of comments, empty space, etc.
+
+Using the `{% minify %}` on its own with no parameters (see below) will minify HTML, as well as any inline CSS (in `<style>` tag pairs) and any inline Javascript (in `<script>` tag pairs).
+
+
 ### Minifying HTML
 
 You can wrap any arbitrary HTML/Twig code in the following block tags to minify it:
@@ -39,12 +53,8 @@ You can wrap any arbitrary HTML/Twig code in the following block tags to minify 
 		(HTML/Twig code here)
     {% endminify %}
 
-...and the resulting HTML output will be stripped of comments, empty space, etc.  A shortcut for HTML minification block tags is simply:
+...and the resulting HTML output will be stripped of comments, empty space, etc.
 
-	{% minify %}
-		(HTML/Twig code here)
-    {% endminify %}
-    
 It will ignore `<script>` and `<style>` tag pairs in the minification.  You should specifically wrap your inline CSS/JS in `{% minify css %}` and `{% minify js}` tag blocks if you want those minimized as well; see below.
 
 ### Minifying CSS
@@ -79,8 +89,6 @@ If you want to minify your entire HTML on the frontend, you can simply wrap your
 			(Entire base HTML/Twig template here)
     {% endminify %}
 
-Then also wrap any inline `<style>` and `<script>` tags in `{% minify css %}` and `{% minify js %}` tags respectively (nested `{% minify %}` tags are fine).
-
 However, understand the potential performance implications.  On large HTML/CSS/JS blocks minification is not cheap, and if you do it this way, every single HTTP request will spend extra cycles minimizing your entire template.
 
 It works fine for HTML/CSS/JS templates that aren't too huge, but measure any performance impact by profiling your website before and after wrapping the entire `_layout.twig` template to ensure you're not introducing additional latency in the http requests.
@@ -92,7 +100,7 @@ On most sites, the overhead that spinning up PHP and Craft takes is the majority
 A great way to use the `{% minify %}` tags is to wrap them in `{% cache %}` tags:
 
 	{% cache %}
-		{% minify html %}
+		{% minify %}
 			(HTML/Twig code here)
     	{% endminify %}
     {% endcache %}
@@ -125,6 +133,12 @@ Since both Minify classes are regex-based, it would be very difficult/error-pron
 If you can think of another safe & efficient way to limit lines in these two tools without adding bytes, please submit a patch, but this is not something anyone should be worrying about.
 
 ## Changelog
+
+### 1.1.0 -- 2016.03.12
+
+* [Added] The default minify tag now minifies all the things (html, css, js)
+* [Added] Added Composer support
+* [Improved] Updated the README.md
 
 ### 1.0.4 -- 2015.12.28
 
