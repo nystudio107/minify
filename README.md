@@ -134,6 +134,11 @@ If you can think of another safe & efficient way to limit lines in these two too
 
 ## Changelog
 
+### 1.1.1 -- 2016.08.04
+
+* [Improved] Removing dev requirement from composer.json
+* [Improved] Updated the README.md
+
 ### 1.1.0 -- 2016.03.12
 
 * [Added] The default minify tag now minifies all the things (html, css, js)
