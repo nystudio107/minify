@@ -1,9 +1,10 @@
 #!/usr/bin/env php
 <?php
 
-die('Must be rewritten for new API');
+$pathToLib = dirname(dirname(__DIR__)) . '/min/lib';
 
-require __DIR__ . '/../../bootstrap.php';
+require "$pathToLib/Minify/Loader.php";
+Minify_Loader::register();
 
 $cli = new MrClay\Cli;
 

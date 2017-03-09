@@ -8,12 +8,9 @@ function test_Lines()
     
     $exp = file_get_contents("{$thisDir}/_test_files/minify/lines_output.js");
 
-    $env = new Minify_Env();
-    $sourceFactory = new Minify_Source_Factory($env, array(), new Minify_Cache_Null());
-    $controller = new Minify_Controller_Files($env, $sourceFactory);
-    $minify = new Minify(new Minify_Cache_Null());
-
-    $ret = $minify->serve($controller, array(
+    Minify::setCache(null); // no cache
+    
+    $ret = Minify::serve('Files', array(
         'debug' => true
         ,'quiet' => true
         ,'encodeOutput' => false

@@ -134,39 +134,4 @@ Since both Minify classes are regex-based, it would be very difficult/error-pron
 
 If you can think of another safe & efficient way to limit lines in these two tools without adding bytes, please submit a patch, but this is not something anyone should be worrying about.
 
-## Changelog
-
-### 1.1.1 -- 2016.08.04
-
-* [Improved] Removing dev requirement from composer.json
-* [Improved] Updated the README.md
-
-### 1.1.0 -- 2016.03.12
-
-* [Added] The default minify tag now minifies all the things (html, css, js)
-* [Added] Added Composer support
-* [Improved] Updated the README.md
-
-### 1.0.4 -- 2015.12.28
-
-* Fixed the `releases.json` feed URL
-* Changed the Minify config settings from `environmentalVariables` to `craft.config` settings
-* Updated the README.md
-
-### 1.0.3 -- 2015.11.23
-
-* Added support for Craft 2.5 new plugin features
-* Updated the README.md
-
-### 1.0.2 -- 2015.11.22
-
-* Added `environmentVariables` to let you control Minify's behavior
-
-### 1.0.1 -- 2015.11.22
-
-* Fixed an issue with the minify submodule not being included in the git repo
-* Updated the README.md
-
-### 1.0.0 -- 2015.11.21
-
-* Initial release
+Brought to you by [nystudio107](http://nystudio107.com)

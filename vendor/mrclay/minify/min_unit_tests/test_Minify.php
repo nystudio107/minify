@@ -8,7 +8,7 @@ function test_Minify()
 {
     global $thisDir;
 
-    $minifyTestPath = __DIR__ . '/_test_files/minify';
+    $minifyTestPath = dirname(__FILE__) . '/_test_files/minify';
     $thisFileActive = (__FILE__ === realpath($_SERVER['SCRIPT_FILENAME']));
     $tomorrow = $_SERVER['REQUEST_TIME'] + 86400;
     $lastModified = $_SERVER['REQUEST_TIME'] - 86400;
@@ -18,20 +18,6 @@ function test_Minify()
     // simulate conditional headers
     $_SERVER['HTTP_IF_NONE_MATCH'] = "\"{$lastModified}pub\"";
     $_SERVER['HTTP_IF_MODIFIED_SINCE'] = gmdate('D, d M Y H:i:s \G\M\T', $lastModified);
-
-    $minify = new Minify(new Minify_Cache_Null());
-    $env = new Minify_Env(array(
-        'server' => $_SERVER,
-    ));
-    $sourceFactory = new Minify_Source_Factory($env, array(), new Minify_Cache_Null());
-    $controller = new Minify_Controller_Files($env, $sourceFactory);
-
-    $output = $minify->serve($controller, array(
-        'files' => $thisDir . '/_test_files/css/styles.css' // controller casts to array
-        ,'quiet' => true
-        ,'lastModifiedTime' => $lastModified
-        ,'encodeOutput' => false
-    ));
 
     $expected = array (
         'success' => true
@@ -46,7 +32,12 @@ function test_Minify()
             '_responseCode' => 'HTTP/1.0 304 Not Modified',
         )
     );
-
+    $output = Minify::serve('Files', array(
+        'files' => $thisDir . '/_test_files/css/styles.css' // controller casts to array
+        ,'quiet' => true
+        ,'lastModifiedTime' => $lastModified
+        ,'encodeOutput' => false
+    ));
     $passed = assertTrue($expected === $output, 'Minify : 304 response');
     if ($thisFileActive) {
         echo "\nOutput: " .var_export($output, 1). "\n\n";
@@ -56,8 +47,9 @@ function test_Minify()
     }
 
     assertTrue(
-        ! class_exists('Minify_CSSmin', false)
-        ,'Minify : minifier classes aren\'t loaded for 304s'
+        ! class_exists('Minify_CSS', false)
+        && ! class_exists('Minify_Cache_File', false)
+        ,'Minify : cache, and minifier classes aren\'t loaded for 304s'
     );
 
     // Test JS and Expires
@@ -82,16 +74,9 @@ function test_Minify()
             'Content-Type' => 'application/x-javascript; charset=utf-8',
         )
     );
-
     unset($_SERVER['HTTP_IF_NONE_MATCH']);
     unset($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-
-    $env = new Minify_Env(array(
-        'server' => $_SERVER,
-    ));
-    $sourceFactory = new Minify_Source_Factory($env, array(), new Minify_Cache_Null());
-    $controller = new Minify_Controller_Files($env, $sourceFactory);
-    $output = $minify->serve($controller, array(
+    $output = Minify::serve('Files', array(
         'files' => array(
             $minifyTestPath . '/email.js'
             ,$minifyTestPath . '/QueryString.js'
@@ -110,8 +95,10 @@ function test_Minify()
     }
     
     // test for Issue 73
+    Minify::setCache(null);
+    
     $expected = ";function h(){}";
-    $output = $minify->serve($controller, array(
+    $output = Minify::serve('Files', array(
         'files' => array(
             $minifyTestPath . '/issue73_1.js'
             ,$minifyTestPath . '/issue73_2.js'
@@ -131,7 +118,7 @@ function test_Minify()
     
     // test for Issue 89
     $expected = file_get_contents($minifyTestPath . '/issue89_out.min.css');
-    $output = $minify->serve($controller, array(
+    $output = Minify::serve('Files', array(
         'files' => array(
             $minifyTestPath . '/issue89_1.css'
             ,$minifyTestPath . '/issue89_2.css'
@@ -149,7 +136,7 @@ function test_Minify()
         }    
     }
     
-    $output = $minify->serve($controller, array(
+    $output = Minify::serve('Files', array(
         'files' => array(
             $minifyTestPath . '/issue89_1.css'
             ,$minifyTestPath . '/issue89_2.css'
@@ -158,10 +145,7 @@ function test_Minify()
         ,'encodeOutput' => false
     ));
     $output = $output['content'];
-
-    $defaultOptions = $minify->getDefaultOptions();
-
-    $passed = assertTrue(0 === strpos($output, $defaultOptions['importWarning']), 'Minify : Issue 89 : detect invalid imports');
+    $passed = assertTrue(0 === strpos($output, Minify::$importWarning), 'Minify : Issue 89 : detect invalid imports');
     if ($thisFileActive) {
         if (! $passed) {
             echo "\n---Output  : " .var_export($output, 1). "\n";
@@ -169,7 +153,7 @@ function test_Minify()
         }    
     }
     
-    $output = $minify->serve($controller, array(
+    $output = Minify::serve('Files', array(
         'files' => array(
             $minifyTestPath . '/issue89_1.css'
         )
@@ -177,7 +161,7 @@ function test_Minify()
         ,'encodeOutput' => false
     ));
     $output = $output['content'];
-    $passed = assertTrue(false === strpos($output, $defaultOptions['importWarning']), 'Minify : Issue 89 : don\'t warn about valid imports');
+    $passed = assertTrue(false === strpos($output, Minify::$importWarning), 'Minify : Issue 89 : don\'t warn about valid imports');
     if ($thisFileActive) {
         if (! $passed) {
             echo "\n---Output  : " .var_export($output, 1). "\n";
@@ -187,8 +171,8 @@ function test_Minify()
 
     // Test Issue 132
     if (function_exists('mb_strlen') && ((int)ini_get('mbstring.func_overload') & 2)) {
-        $output = $minify->serve($controller, array(
-            'files' => array(__DIR__ . '/_test_files/js/issue132.js')
+        $output = Minify::serve('Files', array(
+            'files' => array(dirname(__FILE__) . '/_test_files/js/issue132.js')
             ,'quiet' => true
             ,'encodeOutput' => false
         ));
@@ -215,14 +199,7 @@ function test_Minify()
             'Content-Type' => 'text/css; charset=utf-8',
         )
     );
-
-    $env = new Minify_Env(array(
-        'server' => $_SERVER,
-    ));
-    $sourceFactory = new Minify_Source_Factory($env, array(), new Minify_Cache_Null());
-    $controller = new Minify_Controller_Files($env, $sourceFactory);
-
-    $output = $minify->serve($controller, array(
+    $output = Minify::serve('Files', array(
         'files' => array(
             $thisDir . '/_test_files/css/styles.css'
             ,$thisDir . '/_test_files/css/comments.css'

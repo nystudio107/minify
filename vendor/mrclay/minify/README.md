@@ -24,34 +24,20 @@ Unfortunately we can't support the WordPress plugins here.
 Installation
 ------------
 
-Installation requires PHP 5.3+, SSH access, and access to tools like `git` and `composer` or the privileges to install them.
+Place the `/min/` directory as a child of your DOCUMENT_ROOT
+directory: i.e. you will have: `/home/example/www/min`
 
-```bash
-cd /path/to/public_html
-git clone https://github.com/mrclay/minify.git min
-cd min
-composer install
-```
-
-What this does:
-
-1. Inside your DOCUMENT_ROOT directory, we clone this repo. Otherwise you may [download](https://github.com/mrclay/minify/archive/master.zip) and extract the zip file.
-1. We rename this directory `min`. E.g. You will have something like: `/home/example/public_html/min`
-1. We `cd` into it and run `composer install` to install the dependencies.
-
-You can verify that it is working by visiting these two URLs:
-    
-    * http://example.org/min/?f=min/quick-test.js
-    * http://example.org/min/?f=min/quick-test.css
+You can see verify that it is working by visiting these two URLs:
+- http://example.org/min/?f=min/quick-test.js
+- http://example.org/min/?f=min/quick-test.css
 
 If your server supports mod_rewrite, this URL should also work:
-
-* http://example.org/min/f=min/quick-test.js
+- http://example.org/min/f=min/quick-test.js
 
 Configuration & Usage
 ---------------------
 
-See the [user guide](https://github.com/mrclay/minify/blob/master/docs/UserGuide.wiki.md)!
+See the MIN.txt file and the [user guide](https://github.com/mrclay/minify/blob/master/docs/UserGuide.wiki.md)
 
 Minify also comes with a [URI Builder application](https://github.com/mrclay/minify/blob/master/docs/BuilderApp.wiki.md) that can help you write URLs
 for use with Minify or configure groups of files.
@@ -68,17 +54,22 @@ Support
 Unit Testing
 ------------
 
-1. Open the file `min_unit_tests/_inc.php`.
-1. Enable the file by commenting out the `die()` statement. 
-1. Access: http://example.org/min/min_unit_tests/test_all.php (If you wish, the other test_*.php files can be run to test individual components with more verbose output.)
-1. Re-disable the `_inc.php` file when you are done.
+1. Place the /min_unit_tests/ directory as a child of your DOCUMENT_ROOT
+directory: i.e. you will have: /home/example/www/min_unit_tests
+
+2. To run unit tests, access: http://example.org/min_unit_tests/test_all.php
+
+  (If you wish, the other test_*.php files can be run to test individual
+components with more verbose output.)
+
+3. Remove /min_unit_tests/ from your DOCUMENT_ROOT when you are done.
 
 Warnings
 --------
 
-* Minify is designed for efficiency, but, for very high traffic sites, it will probably serve files slower than your HTTPd due to the CGI overhead of PHP. See the [FAQ](https://github.com/mrclay/minify/blob/master/docs/FAQ.wiki.md#how-fast-is-it) and [CookBook](https://github.com/mrclay/minify/blob/master/docs/CookBook.wiki.md) for more info.
-* If you combine a lot of CSS, watch out for [IE's 4096 selectors-per-file limit](http://stackoverflow.com/a/9906889/3779), affects IE 6 through 9.
-* Minify *should* work fine with files encoded in UTF-8 or other 8-bit encodings like ISO 8859/Windows-1252. By default Minify appends ";charset=utf-8" to the Content-Type headers it sends.
+  * Minify is designed for efficiency, but, for very high traffic sites, it will probably serve files slower than your HTTPd due to the CGI overhead of PHP. See the [FAQ](https://github.com/mrclay/minify/blob/master/docs/FAQ.wiki.md#how-fast-is-it) and [CookBook](https://github.com/mrclay/minify/blob/master/docs/CookBook.wiki.md) for more info.
+  * If you combine a lot of CSS, watch out for [IE's 4096 selectors-per-file limit](http://stackoverflow.com/a/9906889/3779), affects IE 6 through 9.
+  * Minify *should* work fine with files encoded in UTF-8 or other 8-bit encodings like ISO 8859/Windows-1252. By default Minify appends ";charset=utf-8" to the Content-Type headers it sends.
 
 Acknowledgments
 ---------------

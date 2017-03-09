@@ -1,7 +1,8 @@
 <?php
 ini_set('display_errors', 'on');
 
-require __DIR__ . '/../../bootstrap.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../min/lib'));
+require 'HTTP/Encoder.php';
 
 if (!isset($_GET['test'])) {
     $type = 'text/html';
@@ -33,7 +34,7 @@ p span {padding:0 .5em;}
     ob_end_clean();
 
 } elseif ($_GET['test'] == '1') {
-    $content = file_get_contents(__DIR__ . '/green.png');
+    $content = file_get_contents(dirname(__FILE__) . '/green.png');
     $type = 'image/png';
 
 } elseif ($_GET['test'] == '2') {
@@ -55,3 +56,5 @@ $he = new HTTP_Encoder(array(
 ));
 $he->encode();
 $he->sendAll();
+
+?>

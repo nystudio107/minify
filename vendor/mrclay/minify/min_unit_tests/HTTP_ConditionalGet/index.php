@@ -1,6 +1,7 @@
 <?php
 
-require __DIR__ . '/../../bootstrap.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../min/lib'));
+require 'HTTP/ConditionalGet.php';
 
 // emulate regularly updating document
 $every = 20;
@@ -28,7 +29,7 @@ property is false, you echo the content.</p>
 
 require '_include.php';
 
-send_slowly(get_content(array(
+echo send_slowly(get_content(array(
     'title' => $title
     ,'explain' => $explain
 )));

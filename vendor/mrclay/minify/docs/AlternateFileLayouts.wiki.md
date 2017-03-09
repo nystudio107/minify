@@ -1,13 +1,12 @@
 If you test sites in a subdirectory (e.g. `http://localhost/testSite/`) rather than a virtualhost, then you'll need to adjust the way you use Minify to rewrite CSS correctly.
 
-1. Place the following in `config.php`:
-
-```php
+1. Place the following in `min/config.php`:
+```
 // Set the document root to be the path of the "site root"
-$min_documentRoot = substr(__FILE__, 0, -11);
+$min_documentRoot = substr(__FILE__, 0, -15);
 
 // Set $sitePrefix to the path of the site from the webserver's real docroot
-list($sitePrefix) = explode('/index.php', $_SERVER['SCRIPT_NAME'], 2);
+list($sitePrefix) = explode('/min/index.php', $_SERVER['SCRIPT_NAME'], 2);
 
 // Prepend $sitePrefix to the rewritten URIs in CSS files
 $min_symlinks['//' . ltrim($sitePrefix, '/')] = $min_documentRoot;
@@ -26,5 +25,5 @@ Now the `min` application should operate correctly from a subdirectory and will 
 | **file served** | `/home/mysite_com/www/js/file1.js` | `/var/www/testSite/js/file1.js` |
 
 Caveats:
-  * This configuration may break the Builder application (located at `/min/builder/`) used to create Minify URIs, but you can still create them by hand.
+  * This configuration may break the Builder application (located at `/min/builder/`) used to create Minify URIs, but you can still [create them by hand](http://code.google.com/p/minify/source/browse/tags/release_2.1.3/min/README.txt#18).
   * Make sure you don't reset `$min_symlinks` to a different value lower in your config file.

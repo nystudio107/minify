@@ -1,7 +1,4 @@
 <?php
-die('Disabled: use this only for testing');
-
-require __DIR__ . '/../../bootstrap.php';
 
 function getPost($key) {
     return get_magic_quotes_gpc()
@@ -32,20 +29,15 @@ if (isset($_POST['method']) && $_POST['method'] === 'Minify and serve') {
     $sourceSpec['content'] = $textIn;
     $sourceSpec['id'] = 'foo';
     if (isset($_POST['minJs'])) {
-        $sourceSpec['minifyOptions']['jsMinifier'] = array('JSMin\\JSMin', 'minify');
+        $sourceSpec['minifyOptions']['jsMinifier'] = array('JSMin', 'minify');
     }
     if (isset($_POST['minCss'])) {
-        $sourceSpec['minifyOptions']['cssMinifier'] = array('Minify_CSSmin', 'minify');
+        $sourceSpec['minifyOptions']['cssMinifier'] = array('Minify_CSS', 'minify');
     }
     $source = new Minify_Source($sourceSpec);
     Minify_Logger::setLogger(FirePHP::getInstance(true));
-
-    $env = new Minify_Env();
-    $controller = new Minify_Controller_Files($env, new Minify_Source_Factory($env));
-    $minify = new Minify(new Minify_Cache_Null());
-
     try {
-        $minify->serve($controller, array(
+        Minify::serve('Files', array(
             'files' => $source
             ,'contentType' => Minify::TYPE_HTML
         ));
@@ -56,15 +48,15 @@ if (isset($_POST['method']) && $_POST['method'] === 'Minify and serve') {
 }
 
 $tpl = array();
-$tpl['classes'] = array('Minify_HTML', 'JSMin\\JSMin', 'Minify_CSS');
+$tpl['classes'] = array('Minify_HTML', 'JSMin', 'Minify_CSS', 'Minify_CSSmin', 'JSMinPlus');
 
 if (isset($_POST['method']) && in_array($_POST['method'], $tpl['classes'])) {
 
     $args = array($textIn);
     if ($_POST['method'] === 'Minify_HTML') {
         $args[] = array(
-            'cssMinifier' => array('Minify_CSSmin', 'minify')
-            ,'jsMinifier' => array('JSMin\\JSMin', 'minify')
+            'cssMinifier' => array('Minify_CSS', 'minify')
+            ,'jsMinifier' => array('JSMin', 'minify')
         );
     }
     $func = array($_POST['method'], 'minify');
@@ -118,9 +110,6 @@ function sendPage($vars) {
     header('Content-Type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html><head><title>minifyTextarea</title></head>
-
-<p><strong>Warning! Please do not place this application on a public site.</strong> This should be used only for testing.</p>
-
 <?php
 if (isset($vars['exceptionMsg'])) {
     echo $vars['exceptionMsg'];

@@ -1,9 +1,9 @@
 <?php
-// comment this out to run tests
-die('This script is disabled.');
 
-require __DIR__ . '/../bootstrap.php';
-require __DIR__ . '/../config.php';
+require dirname(__FILE__) . '/../min/config.php';
+
+require "$min_libPath/Minify/Loader.php";
+Minify_Loader::register();
 
 // set cache path and doc root if configured
 $minifyCachePath = isset($min_cachePath) 
@@ -25,7 +25,7 @@ ini_set('display_errors', 1);
 
 header('Content-Type: text/plain;charset=utf-8');
 
-$thisDir = __DIR__;
+$thisDir = dirname(__FILE__);
 
 /**
  * pTest - PHP Unit Tester

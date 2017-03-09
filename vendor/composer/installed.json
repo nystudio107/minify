@@ -1,32 +1,42 @@
 [
     {
-        "name": "mrclay/jsmin-php",
-        "version": "2.3.2",
-        "version_normalized": "2.3.2.0",
+        "name": "composer/installers",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/mrclay/jsmin-php.git",
-            "reference": "932c9633c35b390beb2cfdea69a41ea7dbc8d759"
+            "url": "https://github.com/composer/installers.git",
+            "reference": "d78064c68299743e0161004f2de3a0204e33b804"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mrclay/jsmin-php/zipball/932c9633c35b390beb2cfdea69a41ea7dbc8d759",
-            "reference": "932c9633c35b390beb2cfdea69a41ea7dbc8d759",
+            "url": "https://api.github.com/repos/composer/installers/zipball/d78064c68299743e0161004f2de3a0204e33b804",
+            "reference": "d78064c68299743e0161004f2de3a0204e33b804",
             "shasum": ""
         },
         "require": {
-            "ext-pcre": "*",
-            "php": ">=5.3.0"
+            "composer-plugin-api": "^1.0"
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
         },
         "require-dev": {
-            "phpunit/phpunit": "4.2"
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
         },
-        "time": "2015-03-30 15:04:42",
-        "type": "library",
+        "time": "2016-08-13T20:53:52+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Composer\\Installers\\Plugin",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
         "installation-source": "dist",
         "autoload": {
-            "psr-0": {
-                "JSMin\\": "src/"
+            "psr-4": {
+                "Composer\\Installers\\": "src/Composer/Installers"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -35,144 +45,100 @@
         ],
         "authors": [
             {
-                "name": "Stephen Clay",
-                "email": "steve@mrclay.org",
-                "role": "Developer"
-            },
-            {
-                "name": "Ryan Grove",
-                "email": "ryan@wonko.com",
-                "role": "Developer"
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
             }
         ],
-        "description": "Provides a modified port of Douglas Crockford's jsmin.c, which removes unnecessary whitespace from JavaScript files.",
-        "homepage": "https://github.com/mrclay/jsmin-php/",
+        "description": "A multi-framework Composer library installer",
+        "homepage": "https://composer.github.io/installers/",
         "keywords": [
-            "compress",
-            "jsmin",
-            "minify"
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "ImageCMS",
+            "MODX Evo",
+            "Mautic",
+            "OXID",
+            "Plentymarkets",
+            "RadPHP",
+            "SMF",
+            "Thelia",
+            "WolfCMS",
+            "agl",
+            "aimeos",
+            "annotatecms",
+            "attogram",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "cockpit",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "dokuwiki",
+            "drupal",
+            "elgg",
+            "expressionengine",
+            "fuelphp",
+            "grav",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "reindex",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "yawik",
+            "zend",
+            "zikula"
         ]
-    },
-    {
-        "name": "tubalmartin/cssmin",
-        "version": "v2.4.8-p4",
-        "version_normalized": "2.4.8.0-patch4",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port.git",
-            "reference": "fe84d71e8420243544c0ce3bd0f5d7c1936b0f90"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/tubalmartin/YUI-CSS-compressor-PHP-port/zipball/fe84d71e8420243544c0ce3bd0f5d7c1936b0f90",
-            "reference": "fe84d71e8420243544c0ce3bd0f5d7c1936b0f90",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.0.0"
-        },
-        "time": "2014-09-22 08:08:50",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "cssmin.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Túbal Martín",
-                "homepage": "http://tubalmartin.me/"
-            }
-        ],
-        "description": "A PHP port of the YUI CSS compressor",
-        "homepage": "https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port",
-        "keywords": [
-            "compress",
-            "compressor",
-            "css",
-            "minify",
-            "yui"
-        ]
-    },
-    {
-        "name": "firephp/firephp-core",
-        "version": "v0.4.0",
-        "version_normalized": "0.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/firephp/firephp-core.git",
-            "reference": "fabad0f2503f9577fe8dd2cb1d1c7cd73ed2aacf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/firephp/firephp-core/zipball/fabad0f2503f9577fe8dd2cb1d1c7cd73ed2aacf",
-            "reference": "fabad0f2503f9577fe8dd2cb1d1c7cd73ed2aacf",
-            "shasum": ""
-        },
-        "time": "2013-04-23 15:28:20",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "lib/FirePHPCore/FirePHP.class.php",
-                "lib/FirePHPCore/fb.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Christoph Dorn",
-                "email": "christoph@christophdorn.com",
-                "homepage": "http://christophdorn.com"
-            }
-        ],
-        "description": "Traditional FirePHPCore library for sending PHP variables to the browser.",
-        "homepage": "https://github.com/firephp/firephp-core"
     },
     {
         "name": "mrclay/minify",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "2.3.0",
+        "version_normalized": "2.3.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/mrclay/minify.git",
-            "reference": "e2bb6b056585745d685e3271d48920233afe50cf"
+            "reference": "f4cb31135d288f951bb0af1f23a03d4c00ba9446"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mrclay/minify/zipball/e2bb6b056585745d685e3271d48920233afe50cf",
-            "reference": "e2bb6b056585745d685e3271d48920233afe50cf",
+            "url": "https://api.github.com/repos/mrclay/minify/zipball/f4cb31135d288f951bb0af1f23a03d4c00ba9446",
+            "reference": "f4cb31135d288f951bb0af1f23a03d4c00ba9446",
             "shasum": ""
         },
         "require": {
             "ext-pcre": "*",
-            "firephp/firephp-core": "~0.4.0",
-            "mrclay/jsmin-php": "~2",
-            "php": ">=5.3.0",
-            "tubalmartin/cssmin": "~2.4.8"
+            "php": ">=5.2.1"
         },
         "require-dev": {
-            "leafo/lessphp": "~0.4.0",
-            "meenie/javascript-packer": "~1.1"
+            "tubalmartin/cssmin": "~2.4.8"
         },
         "suggest": {
-            "leafo/lessphp": "LESS support",
-            "meenie/javascript-packer": "Keep track of the Packer PHP port using Composer"
+            "tubalmartin/cssmin": "Support minify with CSSMin (YUI PHP port)"
         },
-        "time": "2015-11-21 21:22:42",
+        "time": "2016-03-08T11:49:57+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
             "classmap": [
-                "lib/"
+                "min/lib/"
             ]
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -187,6 +153,6 @@
             }
         ],
         "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
-        "homepage": "https://github.com/mrclay/minify"
+        "homepage": "http://code.google.com/p/minify/"
     }
 ]
