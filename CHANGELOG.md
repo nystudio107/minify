@@ -1,14 +1,16 @@
 # Minify Changelog
 
-## 1.1.2 - 2017.03.09
+## 1.1.2 - 2017.03.21
 
-* [Improved] Removing dev requirement from composer.json
+* [Improved] Updated vendor dependencies for PHP 7.1 compatibility
+* [Fixed] Fixed a typecasting issue in the 3rd party CSSmin lib for PHP 7.1 compatibility
+* [Improved] Updated the class names used in the updated vendor deps
+* [Improved] Broke out the changelog to CHANGELOG.md
 * [Improved] Updated the README.md
 
 ## 1.1.1 - 2016.08.04
 
-* [Improved] Updated vendor dependencies for PHP 7.1 compatibility
-* [Improved] Broke out the changelog to CHANGELOG.md
+* [Improved] Removing dev requirement from composer.json
 * [Improved] Updated the README.md
 
 ## 1.1.0 - 2016.03.12
