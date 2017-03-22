@@ -1,6 +1,6 @@
 # Minify Changelog
 
-## 1.1.2 - 2017.03.21
+## 1.1.2 - 2017.03.22
 
 * [Improved] Updated vendor dependencies for PHP 7.1 compatibility
 * [Fixed] Fixed a typecasting issue in the 3rd party CSSmin lib for PHP 7.1 compatibility

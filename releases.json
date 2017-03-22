@@ -2,7 +2,7 @@
     {
         "version": "1.1.2",
         "downloadUrl": "https://github.com/khalwat/minify/archive/master.zip",
-        "date": "2017-03-21T11:00:00-05:00",
+        "date": "2017-03-22T11:00:00-05:00",
         "notes": [
             "[Improved] Updated vendor dependencies for PHP 7.1 compatibility",
             "[Fixed] Fixed a typecasting issue in the 3rd party CSSmin lib for PHP 7.1 compatibility",
