@@ -125,7 +125,7 @@ Minify offers two `craft.config` (set in your `config/general.php`) to allow you
 
 Minify uses the [Minify PHP library](https://github.com/mrclay/minify).  Here's their official explanation:
 
-####Why do the CSS & HTML minifiers add so many line breaks?
+#### Why do the CSS & HTML minifiers add so many line breaks?
 TL;DR: Ignore them. They don't add to the output size and if you absolutely want all content on one line you will have to use another tool.
 
 It's rumored that some source control tools and old browsers don't like very long lines. Compressed files with shorter lines are also easier to diff.
