@@ -12,7 +12,8 @@
  *
  * @package Minify
  */
-interface Minify_SourceInterface {
+interface Minify_SourceInterface
+{
 
     /**
      * Get the minifier
@@ -27,7 +28,7 @@ interface Minify_SourceInterface {
      * @param callable $minifier
      * @return void
      */
-    public function setMinifier($minifier);
+    public function setMinifier($minifier = null);
 
     /**
      * Get options for the minifier

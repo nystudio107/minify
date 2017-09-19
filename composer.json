@@ -3,7 +3,7 @@
   "description": "A simple plugin that allows you to minify blocks of HTML, CSS, and JS inline in Craft CMS templates.",
   "type": "craft-plugin",
   "require": {
-    "mrclay/minify": "^2.3.0",
+    "mrclay/minify": "^3.0.2",
     "composer/installers": "~1.0"
   }
 }

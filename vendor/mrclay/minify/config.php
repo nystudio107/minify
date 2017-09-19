@@ -8,6 +8,12 @@
 
 
 /**
+ * Enable the static serving feature
+ */
+$min_enableStatic = false;
+
+
+/**
  * Allow use of the Minify URI Builder app. Only set this to true while you need it.
  */
 $min_enableBuilder = false;
@@ -27,12 +33,8 @@ $min_builderPassword = 'admin';
 
 
 /**
- * Set to true to log messages to FirePHP (Firefox Firebug addon).
+ * Set to true to log messages to FirePHP (Firefox Firebug addon) and PHP's error_log
  * Set to false for no error logging (Minify may be slightly faster).
- * @link http://www.firephp.org/
- *
- * If you want to use a custom error logger, set this to your logger
- * instance. Your object should have a method log(string $message).
  */
 $min_errorLogger = false;
 
@@ -59,6 +61,7 @@ $min_allowDebugFlag = false;
 //$min_cachePath = 'c:\\WINDOWS\\Temp';
 //$min_cachePath = '/tmp';
 //$min_cachePath = preg_replace('/^\\d+;/', '', session_save_path());
+
 
 /**
  * To use APC/Memcache/ZendPlatform for cache storage, require the class and
@@ -193,9 +196,6 @@ $min_uploaderHoursBehind = 0;
  *
  * You can see the default implementations (and what gets passed in) in index.php.
  */
-//$min_factories['minify'] = ... a callable
-//$min_factories['controller'] = ... a callable
+//$min_factories['minify'] = ... a callable accepting a Minify\App object
+//$min_factories['controller'] = ... a callable accepting a Minify\App object
 
-
-// try to disable output_compression (may not have an effect)
-ini_set('zlib.output_compression', '0');

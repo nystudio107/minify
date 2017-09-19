@@ -5,12 +5,13 @@
  */
 
 /**
- * Helpers for writing Minfy URIs into HTML
+ * Helpers for writing Minify URIs into HTML
  *
  * @package Minify
  * @author Stephen Clay <steve@mrclay.org>
  */
-class Minify_HTML_Helper {
+class Minify_HTML_Helper
+{
     public $rewriteWorks = true;
     public $minAppUri = '/min';
     public $groupsConfigFile = '';
@@ -31,23 +32,26 @@ class Minify_HTML_Helper {
     public static function getUri($keyOrFiles, $opts = array())
     {
         $opts = array_merge(array( // default options
-            'farExpires' => true
-            ,'debug' => false
-            ,'charset' => 'UTF-8'
-            ,'minAppUri' => '/min'
-            ,'rewriteWorks' => true
-            ,'groupsConfigFile' => ''
+            'farExpires' => true,
+            'debug' => false,
+            'charset' => 'UTF-8',
+            'minAppUri' => '/min',
+            'rewriteWorks' => true,
+            'groupsConfigFile' => self::app()->groupsConfigPath,
         ), $opts);
+
         $h = new self;
         $h->minAppUri = $opts['minAppUri'];
         $h->rewriteWorks = $opts['rewriteWorks'];
         $h->groupsConfigFile = $opts['groupsConfigFile'];
+
         if (is_array($keyOrFiles)) {
             $h->setFiles($keyOrFiles, $opts['farExpires']);
         } else {
             $h->setGroup($keyOrFiles, $opts['farExpires']);
         }
         $uri = $h->getRawUri($opts['farExpires'], $opts['debug']);
+
         return htmlspecialchars($uri, ENT_QUOTES, $opts['charset']);
     }
 
@@ -75,6 +79,7 @@ class Minify_HTML_Helper {
         } elseif ($farExpires && $this->_lastModified) {
             $path .= "&" . $this->_lastModified;
         }
+
         return $path;
     }
 
@@ -94,9 +99,8 @@ class Minify_HTML_Helper {
         foreach ($files as $k => $file) {
             if (0 === strpos($file, '//')) {
                 $file = substr($file, 2);
-            } elseif (0 === strpos($file, '/')
-                      || 1 === strpos($file, ':\\')) {
-                $file = substr($file, strlen($_SERVER['DOCUMENT_ROOT']) + 1);
+            } elseif (0 === strpos($file, '/') || 1 === strpos($file, ':\\')) {
+                $file = substr($file, strlen(self::app()->env->getDocRoot()) + 1);
             }
             $file = strtr($file, '\\', '/');
             $files[$k] = $file;
@@ -115,15 +119,19 @@ class Minify_HTML_Helper {
         $this->_groupKey = $key;
         if ($checkLastModified) {
             if (! $this->groupsConfigFile) {
-                $this->groupsConfigFile = dirname(dirname(dirname(__DIR__))) . '/groupsConfig.php';
+                $this->groupsConfigFile = self::app()->groupsConfigPath;
             }
             if (is_file($this->groupsConfigFile)) {
                 $gc = (require $this->groupsConfigFile);
                 $keys = explode(',', $key);
                 foreach ($keys as $key) {
-                    if (isset($gc[$key])) {
-                        $this->_lastModified = self::getLastModified($gc[$key], $this->_lastModified);
+                    if (!isset($gc[$key])) {
+                        // this can happen if value is null
+                        // which could be solved with array_filter
+                        continue;
                     }
+
+                    $this->_lastModified = self::getLastModified($gc[$key], $this->_lastModified);
                 }
             }
         }
@@ -139,26 +147,40 @@ class Minify_HTML_Helper {
     public static function getLastModified($sources, $lastModified = 0)
     {
         $max = $lastModified;
+        $factory = self::app()->sourceFactory;
+
         /** @var Minify_Source $source */
         foreach ((array)$sources as $source) {
-            if ($source instanceof Minify_Source) {
-                $max = max($max, $source->getLastModified());
-            } elseif (is_string($source)) {
-                if (0 === strpos($source, '//')) {
-                    $source = $_SERVER['DOCUMENT_ROOT'] . substr($source, 1);
-                }
-                if (is_file($source)) {
-                    $max = max($max, filemtime($source));
-                }
-            }
+            $source = $factory->makeSource($source);
+            $max = max($max, $source->getLastModified());
         }
+
         return $max;
+    }
+
+    /**
+     * @param \Minify\App $app
+     * @return \Minify\App
+     * @internal
+     */
+    public static function app(\Minify\App $app = null)
+    {
+        static $cached;
+        if ($app) {
+            $cached = $app;
+
+            return $app;
+        }
+        if ($cached === null) {
+            $cached = (require __DIR__ . '/../../../bootstrap.php');
+        }
+
+        return $cached;
     }
 
     protected $_groupKey = null; // if present, URI will be like g=...
     protected $_filePaths = array();
     protected $_lastModified = null;
-
 
     /**
      * In a given array of strings, find the character they all have at
@@ -168,7 +190,8 @@ class Minify_HTML_Helper {
      * @param int $pos index to check
      * @return mixed a common char or '' if any do not match
      */
-    protected static function _getCommonCharAtPos($arr, $pos) {
+    protected static function _getCommonCharAtPos($arr, $pos)
+    {
         if (!isset($arr[0][$pos])) {
             return '';
         }
@@ -182,6 +205,7 @@ class Minify_HTML_Helper {
                 return '';
             }
         }
+
         return $c;
     }
 
@@ -192,7 +216,8 @@ class Minify_HTML_Helper {
      * @param string $minRoot root-relative URI of the "min" application
      * @return string
      */
-    protected static function _getShortestUri($paths, $minRoot = '/min/') {
+    protected static function _getShortestUri($paths, $minRoot = '/min/')
+    {
         $pos = 0;
         $base = '';
         while (true) {
@@ -217,10 +242,9 @@ class Minify_HTML_Helper {
             $base = substr($base, 0, strlen($base) - 1);
             $bUri = $minRoot . 'b=' . $base . '&f=' . implode(',', $basedPaths);
 
-            $uri = strlen($uri) < strlen($bUri)
-                ? $uri
-                : $bUri;
+            $uri = strlen($uri) < strlen($bUri) ? $uri : $bUri;
         }
+
         return $uri;
     }
 }

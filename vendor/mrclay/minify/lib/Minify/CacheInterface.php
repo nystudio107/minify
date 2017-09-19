@@ -4,13 +4,13 @@
  * @package Minify
  */
 
-
 /**
  * Interface for Minify cache adapters
  *
  * @package Minify
  */
-interface Minify_CacheInterface {
+interface Minify_CacheInterface
+{
     /**
      * Write data to cache.
      *

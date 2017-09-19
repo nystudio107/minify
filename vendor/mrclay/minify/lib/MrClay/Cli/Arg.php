@@ -43,7 +43,8 @@ use BadMethodCallException;
  * @author Steve Clay <steve@mrclay.org>
  * @license http://www.opensource.org/licenses/mit-license.php  MIT License
  */
-class Arg {
+class Arg
+{
     /**
      * @return array
      */
@@ -97,6 +98,7 @@ class Arg {
     public function useAsOutfile()
     {
         $this->spec['useAsOutfile'] = true;
+
         return $this->assertFile()->assertWritable();
     }
 
@@ -109,6 +111,7 @@ class Arg {
     public function useAsInfile()
     {
         $this->spec['useAsInfile'] = true;
+
         return $this->assertFile()->assertReadable();
     }
 
@@ -127,6 +130,7 @@ class Arg {
     public function setDescription($desc)
     {
         $this->description = $desc;
+
         return $this;
     }
 
@@ -164,6 +168,7 @@ class Arg {
         } else {
             throw new BadMethodCallException('Method does not exist');
         }
+
         return $this;
     }
 
@@ -178,6 +183,7 @@ class Arg {
         if (array_key_exists($name, $this->spec)) {
             return $this->spec[$name];
         }
+
         return null;
     }
 }
