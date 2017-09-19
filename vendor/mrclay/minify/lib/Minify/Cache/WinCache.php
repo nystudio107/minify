@@ -6,11 +6,11 @@
 
 /**
  * WinCache-based cache class for Minify
- * 
+ *
  * <code>
  * Minify::setCache(new Minify_Cache_WinCache());
  * </code>
- * 
+ *
  * @package Minify
  * @author Matthias Fax
  **/
@@ -32,7 +32,7 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
         }
         $this->_exp = $expire;
     }
-    
+
     /**
      * Write data to cache.
      *
@@ -46,7 +46,7 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
     {
         return wincache_ucache_set($id, "{$_SERVER['REQUEST_TIME']}|{$data}", $this->_exp);
     }
-    
+
     /**
      * Get the size of a cache entry
      *
@@ -59,9 +59,14 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
         if (!$this->_fetch($id)) {
             return false;
         }
-        return (function_exists('mb_strlen') && ((int) ini_get('mbstring.func_overload') & 2)) ? mb_strlen($this->_data, '8bit') : strlen($this->_data);
+
+        if (function_exists('mb_strlen') && ((int) ini_get('mbstring.func_overload') & 2)) {
+            return mb_strlen($this->_data, '8bit');
+        } else {
+            return strlen($this->_data);
+        }
     }
-    
+
     /**
      * Does a valid cache entry exist?
      *
@@ -75,7 +80,7 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
     {
         return ($this->_fetch($id) && ($this->_lm >= $srcMtime));
     }
-    
+
     /**
      * Send the cached content to output
      *
@@ -85,7 +90,7 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
     {
         echo $this->_fetch($id) ? $this->_data : '';
     }
-    
+
     /**
      * Fetch the cached content
      *
@@ -97,14 +102,14 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
     {
         return $this->_fetch($id) ? $this->_data : '';
     }
-    
-    private $_exp = NULL;
-    
+
+    private $_exp = null;
+
     // cache of most recently fetched id
-    private $_lm = NULL;
-    private $_data = NULL;
-    private $_id = NULL;
-    
+    private $_lm = null;
+    private $_data = null;
+    private $_id = null;
+
     /**
      * Fetch data and timestamp from WinCache, store in instance
      *
@@ -117,14 +122,18 @@ class Minify_Cache_WinCache implements Minify_CacheInterface
         if ($this->_id === $id) {
             return true;
         }
+
         $suc = false;
         $ret = wincache_ucache_get($id, $suc);
         if (!$suc) {
-            $this->_id = NULL;
+            $this->_id = null;
+
             return false;
         }
+
         list($this->_lm, $this->_data) = explode('|', $ret, 2);
         $this->_id = $id;
+
         return true;
     }
 }

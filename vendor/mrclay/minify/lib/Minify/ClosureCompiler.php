@@ -24,18 +24,12 @@
  *
  * </code>
  *
- * @todo unit tests, $options docs
- * @todo more options support (or should just passthru them all?)
- *
  * @package Minify
  * @author Stephen Clay <steve@mrclay.org>
  * @author Elan Ruusamäe <glen@delfi.ee>
  */
 class Minify_ClosureCompiler
 {
-    const OPTION_CHARSET = 'charset';
-    const OPTION_COMPILATION_LEVEL = 'compilation_level';
-
     public static $isDebug = false;
 
     /**
@@ -61,6 +55,17 @@ class Minify_ClosureCompiler
     public static $javaExecutable = 'java';
 
     /**
+     * Default command line options passed to closure-compiler
+     *
+     * @var array
+     */
+    public static $defaultOptions = array(
+        'charset' => 'utf-8',
+        'compilation_level' => 'SIMPLE_OPTIMIZATIONS',
+        'warning_level' => 'QUIET',
+    );
+
+    /**
      * Minify a Javascript string
      *
      * @param string $js
@@ -72,6 +77,7 @@ class Minify_ClosureCompiler
     public static function minify($js, $options = array())
     {
         $min = new static();
+
         return $min->process($js, $options);
     }
 
@@ -122,6 +128,7 @@ class Minify_ClosureCompiler
             $this->getCompilerCommandLine(),
             $this->getOptionsCommandLine($userOptions)
         );
+
         return join(' ', $args) . ' ' . escapeshellarg($tmpFile);
     }
 
@@ -134,8 +141,10 @@ class Minify_ClosureCompiler
         $this->checkJar(self::$jarFile);
         $server = array(
             self::$javaExecutable,
-            '-jar', escapeshellarg(self::$jarFile)
+            '-jar',
+            escapeshellarg(self::$jarFile)
         );
+
         return $server;
     }
 
@@ -147,22 +156,13 @@ class Minify_ClosureCompiler
     {
         $args = array();
 
-        $o = array_merge(
-            array(
-                self::OPTION_CHARSET => 'utf-8',
-                self::OPTION_COMPILATION_LEVEL => 'SIMPLE_OPTIMIZATIONS',
-            ),
+        $options = array_merge(
+            static::$defaultOptions,
             $userOptions
         );
-        $charsetOption = $o[self::OPTION_CHARSET];
-        if (preg_match('/^[\\da-zA-Z0-9\\-]+$/', $charsetOption)) {
-            $args[] = "--charset {$charsetOption}";
-        }
 
-        foreach (array(self::OPTION_COMPILATION_LEVEL) as $opt) {
-            if ($o[$opt]) {
-                $args[] = "--{$opt} " . escapeshellarg($o[$opt]);
-            }
+        foreach ($options as $key => $value) {
+            $args[] = "--{$key} " . escapeshellarg($value);
         }
 
         return $args;
@@ -212,6 +212,7 @@ class Minify_ClosureCompiler
             throw new Minify_ClosureCompiler_Exception('Could not create temp file in "' . $dir . '".');
         }
         file_put_contents($tmpFile, $content);
+
         return $tmpFile;
     }
 
@@ -229,6 +230,7 @@ class Minify_ClosureCompiler
         if (!in_array($result_code, $expectedCodes)) {
             throw new Minify_ClosureCompiler_Exception("Unpexpected return code: $result_code");
         }
+
         return $output;
     }
 }

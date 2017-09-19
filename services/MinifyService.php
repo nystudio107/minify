@@ -33,7 +33,7 @@ class MinifyService extends BaseApplicationComponent
         {
             $options = array(
                 'cssMinifier' => '\Minify_CSSmin::minify',
-                'jsMinifier' => '\JSMin::minify',
+                'jsMinifier' => '\JSMin\JSMin::minify',
                 );
             $htmlText = \Minify_HTML::minify($htmlText, $options);
         }
@@ -74,7 +74,7 @@ class MinifyService extends BaseApplicationComponent
     {
         if ($this->shouldMinify)
         {
-            $jsText = \JSMin::minify($jsText);
+            $jsText = \JSMin\JSMin::minify($jsText);
         }
         return $jsText;
     } /* -- jsMin */

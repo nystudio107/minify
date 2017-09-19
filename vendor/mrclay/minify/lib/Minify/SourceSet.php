@@ -7,7 +7,8 @@
 /**
  * @package Minify
  */
-class Minify_SourceSet {
+class Minify_SourceSet
+{
 
     /**
      * Get unique string for a set of sources
@@ -24,6 +25,7 @@ class Minify_SourceSet {
                 $source->getId(), $source->getMinifier(), $source->getMinifierOptions()
             );
         }
+
         return md5(serialize($info));
     }
 }

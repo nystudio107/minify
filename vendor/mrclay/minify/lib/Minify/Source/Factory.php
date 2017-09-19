@@ -1,6 +1,7 @@
 <?php
 
-class Minify_Source_Factory {
+class Minify_Source_Factory
+{
 
     /**
      * @var array
@@ -67,9 +68,13 @@ class Minify_Source_Factory {
             throw new InvalidArgumentException("fileChecker option is not callable");
         }
 
-	    $this->setHandler('~\.less$~i', function ($spec) use ($cache) {
-		    return new Minify_LessCssSource($spec, $cache);
-	    });
+        $this->setHandler('~\.less$~i', function ($spec) use ($cache) {
+            return new Minify_LessCssSource($spec, $cache);
+        });
+
+        $this->setHandler('~\.scss~i', function ($spec) use ($cache) {
+            return new Minify_ScssCssSource($spec, $cache);
+        });
 
         $this->setHandler('~\.(js|css)$~i', function ($spec) {
             return new Minify_Source($spec);
@@ -119,11 +124,15 @@ class Minify_Source_Factory {
      */
     public function makeSource($spec)
     {
-        $source = null;
-
-        if ($spec instanceof Minify_SourceInterface) {
-            $source = $spec;
+        if (is_string($spec)) {
+            $spec = array(
+                'filepath' => $spec,
+            );
+        } elseif ($spec instanceof Minify_SourceInterface) {
+            return $spec;
         }
+
+        $source = null;
 
         if (empty($spec['filepath'])) {
             // not much we can check
@@ -139,11 +148,20 @@ class Minify_Source_Factory {
         }
 
         if ($this->options['checkAllowDirs']) {
-            foreach ((array)$this->options['allowDirs'] as $allowDir) {
-                if (strpos($spec['filepath'], $allowDir) !== 0) {
-                    throw new Minify_Source_FactoryException("File '{$spec['filepath']}' is outside \$allowDirs."
-                        . " If the path is resolved via an alias/symlink, look into the \$min_symlinks option.");
+            $allowDirs = (array)$this->options['allowDirs'];
+            $inAllowedDir = false;
+            $filePath = $this->env->normalizePath($spec['filepath']);
+            foreach ($allowDirs as $allowDir) {
+                if (strpos($filePath, $this->env->normalizePath($allowDir)) === 0) {
+                    $inAllowedDir = true;
                 }
+            }
+
+            if (!$inAllowedDir) {
+                $allowDirsStr = implode(';', $allowDirs);
+                throw new Minify_Source_FactoryException("File '{$spec['filepath']}' is outside \$allowDirs "
+                    . "($allowDirsStr). If the path is resolved via an alias/symlink, look into the "
+                    . "\$min_symlinks option.");
             }
         }
 
@@ -154,7 +172,7 @@ class Minify_Source_Factory {
                 $spec['minifyOptions']['compress'] = false;
                 // we still want URI rewriting to work for CSS
             } else {
-                $spec['minifier'] = '';
+                $spec['minifier'] = 'Minify::nullMinifier';
             }
         }
 

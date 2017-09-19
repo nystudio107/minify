@@ -6,4 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Props\\' => array($vendorDir . '/mrclay/props-dic/src', $vendorDir . '/mrclay/props-dic/test'),
+    'Pimple' => array($vendorDir . '/pimple/pimple/src'),
+    'JSMin\\' => array($vendorDir . '/mrclay/jsmin-php/src'),
 );

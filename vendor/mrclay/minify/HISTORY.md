@@ -1,12 +1,38 @@
-## 3.0 progress
-* Better CSS minification via Túbal Martín's CSSMin
-* Docs overhaul
-* New API incompatible with the 2.x versions
-* Installation requires use of Composer to install dependencies
-* Add config option for simply concatenating files
-* Add config option for altering creation of Minify/MinApp objects
+## Version 3.0.2 (2017-09-14)
+
+* Fixes syntax error in Groups controller, #613
+* Better-maintained lessphp fork, #610
+* No longer corrupts some chars in some environments, #608
+
+## Version 3.0.1 (2017-06-09)
+
+* Update CSSmin to v4, #599, #590
+
+## Version 3.0.0 (2017-04-03)
+* Improved CSS minification via Túbal Martín's CSSMin
+* Easier error identification (just see error_log)
+* Adds feature to serve static files directly
+* Adds config option for simply concatenating files
+* Adds config option for altering creation of Minify/MinApp objects
 * Missing spec no longer redirects, instead links to docs
-* Removed JSMin+ (unmaintained, high memory usage)
+* Installation requires use of Composer to install dependencies
+* Minify::VERSION is an int that tracks the major version number
+* BREAKING: The project root is now what gets deployed as `min`
+* BREAKING: Removes JSMin
+* BREAKING: Removes JSMin+ (unmaintained, high memory usage)
+* BREAKING: Removes DooDigestAuth
+* BREAKING: Removes Minify_Loader (uses Composer)
+* BREAKING: Removes Minify_Logger (uses Monolog)
+* BREAKING: Removes `$min_libPath` option
+* BREAKING: The Minify, source, and controller components have changed APIs
+
+## Version 2.3.0 (2016-03-11)
+* Adds `$min_concatOnly` option to just concatenate files
+* Deprecates use of Minify_Loader
+* Deprecates use of Minify_Logger
+* Deprecates use of JSMinPlus
+* Deprecates use of FirePHP
+* Deprecates use of DooDigestAuth
 
 ## Version 2.2.1 (2014-10-30)
 * Builder styled with Bootstrap (thanks to help from acidvertigo)
